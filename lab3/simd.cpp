@@ -141,7 +141,7 @@ __m128 random_num(int count, __m128 vec){
 	int* table = new int[count];
 	
 	for(int i=0; i<count; i++){
-		table[i] = (std::rand() % 1000000) + 1;
+		table[i] = (std::rand() % RAND_MAX) + 1;
 	}
 	
 	__m128i int_vec = _mm_load_si128((__m128i*)table);
