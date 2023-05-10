@@ -10,7 +10,7 @@ __m128 div(__m128 a, __m128 b);
 
 unsigned long long timestamp();
 
-__m128 random_num(int count);
+__m128 random_num(int count, __m128 vec);
 
 int main(){
 
@@ -26,8 +26,8 @@ int main(){
 			__m128 operation;
 			unsigned long long start;
 		
-			//a = random_num(count[i]);
-			//b = random_num(count[i]);
+			a = random_num(count[i], a);
+			b = random_num(count[i], b);
 			
 			start = timestamp();
 			operation = add(a, b);
@@ -44,6 +44,7 @@ int main(){
 			start = timestamp();
 			operation = div(a, b);
 			result_div = timestamp() - start;
+			
 		}
 	}
 	
@@ -134,16 +135,19 @@ unsigned long long timestamp(){ // Pomiar ilosci cyklow procesora
 	return result;
 }
 
-__m128 random_num(int count){
-	__m128 result;
-	
-	float* values = reinterpret_cast<float*>(&result);
-	
+__m128 random_num(int count, __m128 vec){
 	srand(time(NULL));
 	
+	int* table = new int[count];
+	
 	for(int i=0; i<count; i++){
-		values[i] = static_cast<float>(rand()) / static_cast<float>(RAND_MAX)+0.0001f;
+		table[i] = (std::rand() % 1000000) + 1;
 	}
 	
-	return result;
+	__m128i int_vec = _mm_load_si128((__m128i*)table);
+	__m128 float_vec = _mm_castsi128_ps(int_vec);
+	float_vec = _mm_add_ps(float_vec, vec);
+	int_vec = _mm_castps_si128(float_vec);
+	
+	return _mm_castsi128_ps(int_vec);
 }
