@@ -18,10 +18,14 @@ int main(){
 	
 	int count[3] = {2048, 4096, 8192}; // Ilosc liczb w wektorze
 	
-	unsigned long long result_add, result_sub, result_mul, result_div; // Zmienne do przechowywania czasow operacji
+	unsigned long long result_add=0, result_sub=0, result_mul=0, result_div=0; // Zmienne do przechowywania czasow operacji
 	
 	
 	for(int i=0; i<3; i++){
+		std::cout<<"Typ obliczen: SIMD / SISD\n";
+		std::cout<<"Liczba liczb:"<<count[i]<<"\n";
+		std::cout<<"Sredni czas [x]:\n";
+		
 		for(int j=0; j<10; j++){
 			__m128 operation;
 			unsigned long long start;
@@ -31,21 +35,26 @@ int main(){
 			
 			start = timestamp();
 			operation = add(a, b);
-			result_add = timestamp() - start;
+			result_add = result_add + (timestamp() - start);
 			
 			start = timestamp();
 			operation = sub(a, b);
-			result_sub = timestamp() - start;
+			result_sub = result_sub + (timestamp() - start);
 			
 			start = timestamp();
 			operation = mul(a, b);
-			result_mul = timestamp() - start;
+			result_mul = result_mul + (timestamp() - start);
 			
 			start = timestamp();
 			operation = div(a, b);
-			result_div = timestamp() - start;
+			result_div = result_div + (timestamp() - start);
 			
 		}
+		
+		std::cout<< "+ " << result_add/10<<"\n";
+		std::cout<< "- " << result_sub/10<<"\n";
+		std::cout<< "* " << result_mul/10<<"\n";
+		std::cout<< "/ " << result_div/10<<"\n\n";
 	}
 	
 	__m128 _add = add(a, b);
