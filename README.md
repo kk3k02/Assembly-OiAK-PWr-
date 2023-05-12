@@ -1,2 +1,3 @@
-Repozytorium zawiera kod wykorzystywany podczas laboratoriów z kursu
-Organizacja i Architektura Komputerów napisany w języku ASM.
+Code used during PWr course labs
+Organization and Architecture of Computers 
+written in assembly / c++ language with ASM inserts
