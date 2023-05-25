@@ -1,0 +1,7 @@
+Typ obliczen: SISD
+Liczba liczb: 4096
+Sredni czas [us]: 
++ 22744.4
+- 21581.2
+* 21298.1
+/ 21283.8
